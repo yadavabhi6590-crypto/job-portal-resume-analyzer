@@ -1,0 +1,34 @@
+graph TB
+    Student(["Student"])
+    Admin(["Admin"])
+    P1["1.0 Authenticate User"]
+    P2["2.0 Analyze Resume"]
+    P3["3.0 Conduct Skill Test"]
+    P4["4.0 Compute Career Readiness"]
+    P5["5.0 Generate PDF Report"]
+    P6["6.0 Admin Management"]
+    D1[("Users DB")]
+    D2[("ResumeAnalysis DB")]
+    D3[("JobRoles DB")]
+    D4[("RoleTests DB")]
+    D5[("TestResults DB")]
+    D6[("IndustryTrends DB")]
+    Student -->|"Credentials"| P1
+    P1 -->|"Verified User"| D1
+    Student -->|"PDF Resume"| P2
+    P2 -->|"Skills, Score, Feedback"| D2
+    P2 -->|"Query Roles"| D3
+    P2 -->|"Query Trends"| D6
+    D2 -->|"Analysis Results"| Student
+    Student -->|"Role Selection and Answers"| P3
+    P3 -->|"Fetch Questions"| D4
+    P3 -->|"Store Results"| D5
+    D5 -->|"Test Score"| Student
+    D2 & D5 --> P4
+    P4 -->|"Combined Score + Rank"| Student
+    Student -->|"Request Report"| P5
+    D2 & D5 -->|"Data"| P5
+    P5 -->|"PDF Download"| Student
+    Admin -->|"Manage Roles and Questions"| P6
+    P6 --> D3 & D4
+    P6 -->|"Analytics"| Admin

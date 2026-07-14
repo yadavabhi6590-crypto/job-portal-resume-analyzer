@@ -1,0 +1,19 @@
+sequenceDiagram
+    actor S as Student
+    participant FE as Frontend React
+    participant MW as Auth Middleware
+    participant PC as PDF Controller
+    participant DB as MongoDB
+    participant KIT as PDFKit
+    S->>FE: Click Download PDF Report
+    FE->>MW: GET /api/v1/pdf/generate JWT
+    MW->>MW: Verify JWT
+    MW->>PC: Forward Request
+    PC->>DB: Fetch Latest ResumeAnalysis
+    PC->>DB: Fetch Latest TestResult
+    DB-->>PC: Analysis and Test Data
+    PC->>KIT: Build PDF Document
+    KIT->>KIT: Add Scores Skills Feedback Plan
+    KIT-->>PC: PDF Buffer
+    PC-->>FE: Stream PDF as application/pdf
+    FE-->>S: Browser downloads PDF file

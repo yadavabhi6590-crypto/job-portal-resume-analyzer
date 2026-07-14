@@ -1,0 +1,57 @@
+erDiagram
+    USER {
+        string clerkId PK
+        string email
+        string fullName
+        string role
+        string bio
+        string github
+        string linkedin
+        date createdAt
+    }
+    JOBROLE {
+        objectId id PK
+        string title
+        string category
+        array requiredSkills
+    }
+    RESUMEANALYSIS {
+        objectId id PK
+        string userId FK
+        string fileName
+        string experienceLevel
+        array extractedSkills
+        number resumeScore
+        array missingSkills
+        number industryMatchPercent
+        array recommendedRoles
+        array aiFeedback
+        array improvementPlan
+        date analysedAt
+    }
+    ROLETEST {
+        objectId id PK
+        string role
+        array questions
+    }
+    TESTRESULT {
+        objectId id PK
+        string userId FK
+        string role
+        number score
+        string knowledgeLevel
+        number careerReadiness
+        date takenAt
+    }
+    INDUSTRYTREND {
+        objectId id PK
+        array trendingSkills
+        array highDemandRoles
+        date updatedAt
+    }
+    USER ||--o{ RESUMEANALYSIS : "submits"
+    USER ||--o{ TESTRESULT : "takes"
+    JOBROLE ||--o{ ROLETEST : "has"
+    ROLETEST ||--o{ TESTRESULT : "generates"
+    RESUMEANALYSIS }o--|| JOBROLE : "matched against"
+    RESUMEANALYSIS }o--|| INDUSTRYTREND : "benchmarked with"

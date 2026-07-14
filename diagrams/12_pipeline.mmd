@@ -1,0 +1,12 @@
+flowchart LR
+    A([PDF Upload]) --> B[Text Extraction\npdf-parse]
+    B --> C[Skill Extraction\nKeyword Matching]
+    C --> D[ATS Score\nCalculation]
+    C --> E[Missing Skills\nIdentification]
+    E --> F[Industry Trend\nMatching]
+    C --> G[Role Recommendation\nPercent Match per Role]
+    B --> H[AI Feedback\nStructure Analysis]
+    E --> I[30-Day Improvement\nPlan Generation]
+    D & E & F & G & H & I --> J[(Save to\nMongoDB)]
+    J --> K[Compute User\nRank and Leaderboard]
+    K --> L([Analysis Result\nPage])

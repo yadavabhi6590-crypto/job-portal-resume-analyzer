@@ -1,0 +1,29 @@
+flowchart TD
+    A([Student Opens App]) --> B[Register or Login via Clerk]
+    B --> C{First Time User?}
+    C -->|Yes| D[Sync Profile to MongoDB]
+    C -->|No| E[Load Dashboard]
+    D --> E
+    E --> F{Choose Action}
+    F -->|Analyze Resume| G[Go to Upload Page]
+    G --> H[Upload PDF Resume]
+    H --> I[Select Experience Level]
+    I --> J[Submit for Analysis]
+    J --> K[Backend Processes Resume]
+    K --> L[View ATS Score and Feedback]
+    L --> M[View Role Recommendations]
+    M --> N{Take MCQ Test?}
+    N -->|Yes| O[Select Job Role]
+    O --> P[Attempt MCQ Test]
+    P --> Q[Submit Answers]
+    Q --> R[View Test Score and Knowledge Level]
+    R --> S[View Career Readiness Score]
+    S --> T{Download Report?}
+    T -->|Yes| U[Download PDF Report]
+    T -->|No| V[View Leaderboard]
+    N -->|No| V
+    U --> V
+    V --> W([End])
+    F -->|Edit Profile| X[Update Bio GitHub LinkedIn]
+    X --> E
+    F -->|View Rankings| V

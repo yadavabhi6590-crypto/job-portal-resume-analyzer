@@ -1,0 +1,22 @@
+flowchart TD
+    A([Admin Logs In]) --> B[Access Admin Panel]
+    B --> C{Choose Action}
+    C -->|Manage Roles| D[View All Job Roles]
+    D --> E{Action?}
+    E -->|Add| F[Create New Job Role + Skills]
+    E -->|Edit| G[Update Role Details]
+    E -->|Delete| H[Remove Job Role]
+    F & G & H --> B
+    C -->|Manage Questions| I[View MCQ Bank]
+    I --> J{Action?}
+    J -->|Add| K[Add New MCQ Question]
+    J -->|Edit| L[Update Question and Options]
+    J -->|Delete| M[Remove Question]
+    K & L & M --> B
+    C -->|View Submissions| N[Browse All Resumes]
+    N --> O[Open Student Resume PDF]
+    O --> P[Review Analysis Data]
+    P --> B
+    C -->|View Analytics| Q[Platform Stats Dashboard]
+    Q --> R[Charts Scores Roles Trends]
+    R --> B

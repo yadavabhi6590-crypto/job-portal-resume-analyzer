@@ -1,0 +1,62 @@
+classDiagram
+    class User {
+        +String clerkId
+        +String email
+        +String fullName
+        +String role
+        +String bio
+        +String github
+        +String linkedin
+        +Date createdAt
+    }
+    class ResumeAnalysis {
+        +String userId
+        +String fileName
+        +String experienceLevel
+        +String[] extractedSkills
+        +Number resumeScore
+        +String[] missingSkills
+        +Number industryMatchPercent
+        +Object[] recommendedRoles
+        +String[] aiFeedback
+        +Object[] improvementPlan
+        +Date analysedAt
+    }
+    class JobRole {
+        +String title
+        +String category
+        +String[] requiredSkills
+    }
+    class RoleTest {
+        +String role
+        +Object[] questions
+    }
+    class TestResult {
+        +String userId
+        +String role
+        +Number score
+        +String knowledgeLevel
+        +Number careerReadiness
+        +Date takenAt
+    }
+    class IndustryTrend {
+        +String[] trendingSkills
+        +String[] highDemandRoles
+        +Date updatedAt
+    }
+    class ResumeAnalysisEngine {
+        +extractSkillsFromText(text) String[]
+        +calculateResumeScore(text, skills, roles) Number
+        +matchSkills(extracted, required) Object
+        +generateAIFeedback(text, skills, level) String[]
+        +generateImprovementPlan(missing, level) Object[]
+        +recommendRoles(skills, roles, level) Object[]
+        +getUserRank(userId) Object
+    }
+    User "1" --> "many" ResumeAnalysis : submits
+    User "1" --> "many" TestResult : takes
+    JobRole "1" --> "1" RoleTest : has
+    ResumeAnalysis --> ResumeAnalysisEngine : processed by
+    ResumeAnalysis --> JobRole : compared with
+    ResumeAnalysis --> IndustryTrend : benchmarked against
+    TestResult --> RoleTest : based on

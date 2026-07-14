@@ -1,0 +1,24 @@
+sequenceDiagram
+    actor S as Student
+    participant FE as Frontend React
+    participant MW as Auth Middleware
+    participant TC as Test Controller
+    participant DB as MongoDB
+    S->>FE: Select Job Role for Test
+    FE->>MW: GET /api/v1/test/role JWT
+    MW->>MW: Verify JWT
+    MW->>TC: Forward Request
+    TC->>DB: RoleTest.findOne role
+    DB-->>TC: MCQ Questions
+    TC-->>FE: Questions without correct answers
+    FE-->>S: Display Test Page OMR Style
+    S->>FE: Submit Answers
+    FE->>MW: POST /api/v1/test/submit JWT + Answers
+    MW->>TC: Forward Request
+    TC->>DB: Fetch Correct Answers
+    TC->>TC: Calculate Score and Knowledge Level
+    TC->>TC: Compute Career Readiness Score
+    TC->>DB: TestResult.create score level readiness
+    DB-->>TC: Saved
+    TC-->>FE: JSON score knowledgeLevel careerReadiness
+    FE-->>S: Display Test Result Page

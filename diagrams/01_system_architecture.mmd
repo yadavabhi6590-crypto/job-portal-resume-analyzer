@@ -1,0 +1,38 @@
+graph TB
+    subgraph CLIENT["Client Layer (Browser)"]
+        UI["React.js + Vite\nFrontend Application"]
+        CLERK_UI["Clerk Hosted Auth UI"]
+    end
+    subgraph SERVER["Application Layer (Node.js + Express)"]
+        MW["Clerk JWT Middleware"]
+        UR["/api/v1/user"]
+        RR["/api/v1/resume"]
+        TR["/api/v1/test"]
+        AR["/api/v1/admin"]
+        PR["/api/v1/pdf"]
+        ENGINE["Resume Analysis Engine"]
+        PDFKIT["PDFKit Report Generator"]
+    end
+    subgraph DB["Data Layer (MongoDB)"]
+        U[(Users)]
+        J[(JobRoles)]
+        RA[(ResumeAnalyses)]
+        RT[(RoleTests)]
+        TRes[(TestResults)]
+        IT[(IndustryTrends)]
+    end
+    subgraph EXT["External Services"]
+        CLERK_SVC["Clerk.dev Auth-as-a-Service"]
+    end
+    UI -->|"HTTP REST + JWT"| MW
+    UI <-->|"OAuth / JWT"| CLERK_UI
+    CLERK_UI <--> CLERK_SVC
+    MW --> UR & RR & TR & AR & PR
+    RR --> ENGINE
+    PR --> PDFKIT
+    UR --> U
+    ENGINE --> RA
+    ENGINE --> J & IT
+    TR --> RT & TRes
+    AR --> U & J & RA & RT
+    PDFKIT --> RA & TRes

@@ -1,0 +1,39 @@
+graph TB
+    subgraph Frontend["Frontend Application React + Vite"]
+        AuthComp["Auth Component Clerk React"]
+        Pages["Pages Landing Dashboard Upload Analysis Test Profile Ranking Admin"]
+        ChartComp["Chart Components Chart.js"]
+        AxiosClient["Axios HTTP Client"]
+    end
+    subgraph Backend["Backend Application Node.js + Express"]
+        AuthMW["Auth Middleware Clerk SDK"]
+        UserCtrl["User Controller"]
+        ResumeCtrl["Resume Controller"]
+        TestCtrl["Test Controller"]
+        AdminCtrl["Admin Controller"]
+        PDFCtrl["PDF Controller"]
+        subgraph Utils["Utility Modules"]
+            SkillMatcher["skillMatcher.js"]
+            AIFeedback["aiFeedback.js"]
+            ImprovPlan["improvementPlan.js"]
+            RoleReco["roleRecommender.js"]
+            RankEngine["rankingEngine.js"]
+        end
+        Multer["Multer File Upload"]
+        PDFParse["pdf-parse Text Extraction"]
+        PDFKit["PDFKit Report Generator"]
+    end
+    subgraph Data["Data Layer"]
+        MongoDB[("MongoDB Database")]
+    end
+    subgraph External["External Services"]
+        ClerkSvc["Clerk.dev Auth Service"]
+    end
+    Pages --> AxiosClient
+    AuthComp <--> ClerkSvc
+    AxiosClient -->|"REST API"| AuthMW
+    AuthMW --> UserCtrl & ResumeCtrl & TestCtrl & AdminCtrl & PDFCtrl
+    ResumeCtrl --> Multer --> PDFParse
+    ResumeCtrl --> SkillMatcher & AIFeedback & ImprovPlan & RoleReco & RankEngine
+    PDFCtrl --> PDFKit
+    UserCtrl & ResumeCtrl & TestCtrl & AdminCtrl & PDFCtrl --> MongoDB

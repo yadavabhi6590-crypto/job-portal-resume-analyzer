@@ -1,0 +1,19 @@
+graph TB
+    subgraph DEV["Developer Machine localhost"]
+        subgraph Browser["Web Browser"]
+            ReactApp["React App :5173"]
+        end
+        subgraph NodeServer["Node.js Server"]
+            ExpressAPI["Express API :5000"]
+        end
+        subgraph DBServer["MongoDB"]
+            DB[("jobportal DB :27017")]
+        end
+    end
+    subgraph Cloud["Cloud External"]
+        ClerkCloud["Clerk.dev Auth Service"]
+    end
+    ReactApp -->|"HTTP REST API Calls"| ExpressAPI
+    ReactApp <-->|"Auth JWT"| ClerkCloud
+    ExpressAPI -->|"Mongoose Queries"| DB
+    ExpressAPI <-->|"JWT Verification"| ClerkCloud

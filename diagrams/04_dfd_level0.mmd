@@ -1,0 +1,10 @@
+graph LR
+    S1(["Student"])
+    S2(["Admin"])
+    SYS["Job Portal\nwith Resume Analyzer"]
+    EXT(["Clerk Auth Service"])
+    S1 -->|"Resume, Login, Test Answers"| SYS
+    SYS -->|"ATS Score, Feedback, Report, Ranking"| S1
+    S2 -->|"Roles, Questions, Config"| SYS
+    SYS -->|"Analytics, Submissions"| S2
+    SYS <-->|"JWT Tokens, Auth Data"| EXT

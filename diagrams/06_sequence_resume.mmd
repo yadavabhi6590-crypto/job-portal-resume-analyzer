@@ -1,0 +1,25 @@
+sequenceDiagram
+    actor S as Student
+    participant FE as Frontend React
+    participant MW as Auth Middleware
+    participant RC as Resume Controller
+    participant ENG as Analysis Engine
+    participant DB as MongoDB
+    S->>FE: Upload PDF + Select Experience Level
+    FE->>MW: POST /api/v1/resume/analyze JWT + File
+    MW->>MW: Verify JWT via Clerk SDK
+    MW->>RC: Forward Request with userId
+    RC->>RC: Extract text from PDF
+    RC->>ENG: extractSkillsFromText
+    RC->>DB: Fetch all JobRoles
+    RC->>ENG: calculateResumeScore
+    RC->>ENG: matchSkills extracted vs required
+    RC->>DB: Fetch IndustryTrends
+    RC->>ENG: recommendRoles
+    RC->>ENG: generateAIFeedback
+    RC->>ENG: generateImprovementPlan
+    RC->>DB: ResumeAnalysis.create all results
+    RC->>DB: getUserRank
+    DB-->>RC: Rank Info
+    RC-->>FE: JSON Response score feedback plan rank
+    FE-->>S: Display Analysis Result Page
